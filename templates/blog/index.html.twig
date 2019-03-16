@@ -1,12 +1,17 @@
+{# {% %} executera l'extension base.html.twig #}
 {% extends 'base.html.twig' %}
+{# {% %} executera la fonction titre #}
 {% block title %}Hello BlogController!{% endblock %}
+{# {% %} executera l'action body #}
 {% block body %}
     <section clas="Articles">
         <article>
+        <div class="titreArticle">
             <h2>Titre de l'article</h2>
-            <div class="metadata">
-                <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-            </div>
+        </div>
+        <div class="metadata">
+            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
+        </div>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                                              It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
@@ -18,16 +23,17 @@
             <img alt="" src="http://placehold.it/350x150">
         </div>
         <div class="boutonArticle">
-            {# j'utilise la commande path avec les doubles {{}} qui permet l'affichage d'une expression #}
-            <a class="btn btn-primary" href="{{ path('blog_show') }}">Lire</a>
+            {# j'utilise {{}} pour permettre l'affichage d'une expression et envoyer la route a l'annotation @ correspondante #}
+             <a href="{{ path('blog_show')}}" class="btn btn-primary">Lire</a>
         </div>
         </article>
-        
         <article>
+        <div class="titreArticle">
             <h2>Titre de l'article</h2>
-            <div class="metadata">
-                <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-            </div>
+        </div>
+        <div class="metadata">
+            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
+        </div>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                                              It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
@@ -39,16 +45,17 @@
             <img alt="" src="http://placehold.it/350x150">
         </div>
         <div class="boutonArticle">
-            {# j'utilise la commande path avec les doubles {{}} qui permet l'affichage d'une expression #}
-            <a class="btn btn-primary" href="{{ path('blog_show') }}">Lire</a>
+            {# j'utilise {{}} pour permettre l'affichage d'une expression et envoyer la route a l'annotation @ correspondante #}
+             <a href="{{ path('blog_show')}}" class="btn btn-primary">Lire</a>
         </div>
         </article>
-
         <article>
+        <div class="titreArticle">
             <h2>Titre de l'article</h2>
-            <div class="metadata">
-                <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-            </div>
+        </div>
+        <div class="metadata">
+            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
+        </div>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                                              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                                              It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
@@ -60,11 +67,12 @@
             <img alt="" src="http://placehold.it/350x150">
         </div>
         <div class="boutonArticle">
-            {# j'utilise la commande path avec les doubles {{}} qui permet l'affichage d'une expression #}
-            <a class="btn btn-primary" href="{{ path('blog_show') }}">Lire</a>
+            {# j'utilise {{}} pour permettre l'affichage d'une expression et envoyer la route a l'annotation @ correspondante #}
+             <a href="{{ path('blog_show')}}" class="btn btn-primary">Lire</a>
         </div>
         </article>
-        
+           
     </section>
+{# {% %} executera la fin du blog #}
 {% endblock %}
         
