@@ -1,0 +1,28 @@
+{# ne pas oublier l'heritage #}
+{% extends "base.html.twig" %}
+
+{# pour utiliser un formulaire bootstrap et ne pas s'embeter a creer les div 
+doc : https://symfony.com/doc/current/form/bootstrap4.html
+#}
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <h1>Création d'un article</h1>
+
+{# le bootstrap_4_layout va construire les div automatiquement #}
+    
+    {# plus besoin du {{ form_start(formArticle)}} mais on peut le garder pour mettre des choses
+    au debut du formulaire
+     #}
+     {{ form_start(formArticle)}}
+
+    {{ form_widget(formArticle)}}
+
+    {# j'ecrit mon bouton en manuel  #}
+    <button type="submit" class="btn btb-success">Ajouter l'article</button>
+
+   {# plus besoin du {{ form_end(formArticle) }} mais pareil que le start #}
+   {{ form_end(formArticle) }}
+
+{% endblock %}

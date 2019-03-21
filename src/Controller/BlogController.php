@@ -7,6 +7,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 
+// je dois determiner chaque use type
+//la doc des formes pour le use https://symfony.com/doc/4.1/forms.html
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+
 class BlogController extends AbstractController
 {
     /**
@@ -43,6 +50,56 @@ class BlogController extends AbstractController
         ]);
     }
 
+    /**
+     * 
+     * @Route("/blog/new", name="blog_create")
+     */
+
+    public function create(){
+
+        $article = new Article();
+
+        // doc pour admnistrer les types https://symfony.com/doc/current/reference/forms/types.html
+        // pour creer des formulaires facilements sur symfony
+        $form = $this->createFormBuilder($article)
+                        //on configure la forme
+                        // je peu configurer les types simple input, text area etc doc : https://symfony.com/doc/current/reference/forms/types.html
+                        //je peu ajouter un tableau d'option qui peut contenir un autre tableau d'option
+                        ->add('title', TextType::class, [
+                            'attr' => [
+                                'placeholder' => "Titre de l'article"
+                                // je rajoute la classe form-control dans un div
+                                // 'class' => 'form-control'
+                                //mais le layout bootstrap m'evite de le faire
+                            ]     
+                        ])
+                        ->add('content', TextareaType::class,[
+                            'attr' => [
+                                'placeholder' => "Contenu de l'article"
+                            ]
+                        ])
+                        ->add('image', TextType::class,[
+                            'attr' => [
+                                'placeholder' => "Image de l'article"
+                            ]
+                        ])
+                        // Ajouter un bouton pour enregistrer en utilisant la statique SubmitType en le labellant Enregistrer
+                        // Ne pas oublier le use pour la classe SubmitTypes
+                        // ->add('save', SubmitType::class,[
+                        //     'label' => 'Enregistrer'
+                        // ])
+                        //Si on veut ajouter ou modifier l'article vaut mieux creer un bouton sur le template create
+                        // on envoit
+                        ->getForm();
+
+        // je passe a twig un tableau en plus de la route pour l'afficher
+        return $this->render('blog/create.html.twig',[
+            // je lui passe une variable form, mais seulement le resultat car $form contient la construction
+            // la methode view va creer l'affichage
+            'formArticle' => $form->createView()
+        ]);
+    }
+
    /**
     * j'ecrit une route paramétré qui suivra l'id de l'article
     * @Route("/blog/{id}", name="blog_show")
@@ -61,4 +118,7 @@ class BlogController extends AbstractController
             'article' => $article
         ]);
     }
+
+    
+
 }

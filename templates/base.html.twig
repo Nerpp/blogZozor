@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
     <head>
+    {# bonne pratique de pas ecrire en dur l'url #}
         <meta charset="UTF-8">
             <title>
                 {% block title %}Blog Zozor{% endblock %}
@@ -10,22 +11,22 @@
             </head>
             <body>
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="/">Blog de<br>Zozor</a>
+                    <a class="navbar-brand" href="{{ path('home')}}">Blog de<br>Zozor</a>
                     <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarColor02">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">Home
+                                <a class="nav-link" href="{{ path('home')}}">Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/blog">Articles</a>
+                                <a class="nav-link" href="{{ path('blog') }}">Articles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Administration</a>
+                                <a class="nav-link" href="{{path('blog_create')}} ">Créer un article</a>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
