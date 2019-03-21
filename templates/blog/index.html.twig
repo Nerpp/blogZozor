@@ -5,73 +5,36 @@
 {# {% %} executera l'action body #}
 {% block body %}
     <section clas="Articles">
-        <article>
+
+    {# je met dans une boucle for de twig le nombre d'article trouvé dans $articles = $repo->findAll(); dans BlogController.php 
+    et utilisera getTitle sans que je lui specifie
+    #}
+    {% for article in articles %}
+    <article>
         <div class="titreArticle">
-            <h2>Titre de l'article</h2>
+        {# je demande a twig d'afficher les titres recuperer dans la Bdd #}
+            <h2>{{article.title}}</h2>
         </div>
         <div class="metadata">
-            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-        </div>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                                             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                                                             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                                              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+        {# pour la date je suis obligé d'utilisé un filtre 
+        https://twig.symfony.com/doc/2.x/filters/index.html #}
+            <p>Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{ article.createdAt | date('H:i') }} dans la categorie Informatique</p>
         </div>
         <div class="content">
-            <img alt="" src="http://placehold.it/350x150">
+        {# pour enlever les balises html j'utilise le filtre raw #}
+            <p>{{ article.content | raw }}</p>
+        </div>
+        <div class="image">
+            <img alt="" src="{{article.image }}">
         </div>
         <div class="boutonArticle">
-            {# j'utilise {{}} pour permettre l'affichage de l'expression path et communiquer avec le name du controller #}
-             <a href="{{ path('blog_show')}}" class="btn btn-primary">Lire</a>
+            {# j'utilise {{}} pour permettre l'affichage de l'expression path et communiquer avec le name du controller
+            path prend deux parametres le nom de la route, et les parametres si besoin #}
+             <a href="{{ path('blog_show', {'id':article.id}) }}" class="btn btn-primary">Lire</a>
         </div>
-        </article>
-        <article>
-        <div class="titreArticle">
-            <h2>Titre de l'article</h2>
-        </div>
-        <div class="metadata">
-            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-        </div>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                                             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                                                             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                                              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
-        </div>
-        <div class="content">
-            <img alt="" src="http://placehold.it/350x150">
-        </div>
-        <div class="boutonArticle">
-            {# j'utilise {{}} pour permettre l'affichage de l'expression path et communiquer avec le name du controller #}
-             <a href="{{ path('blog_show')}}" class="btn btn-primary">Lire</a>
-        </div>
-        </article>
-        <article>
-        <div class="titreArticle">
-            <h2>Titre de l'article</h2>
-        </div>
-        <div class="metadata">
-            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-        </div>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                                             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                                                             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                                              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
-        </div>
-        <div class="content">
-            <img alt="" src="http://placehold.it/350x150">
-        </div>
-        <div class="boutonArticle">
-            {# j'utilise {{}} pour permettre l'affichage de l'expression path et communiquer avec le name du controller #}
-             <a href="{{ path('blog_show')}}" class="btn btn-primary">Lire</a>
-        </div>
-        </article>
-           
+    </article>
+    {% endfor %}%}
+             
     </section>
 {# {% %} executera la fin du blog #}
 {% endblock %}

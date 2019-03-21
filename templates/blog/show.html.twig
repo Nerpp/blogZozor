@@ -6,20 +6,17 @@
 
 <article>
         <div class="titreArticle">
-            <h2>Titre de l'article</h2>
+            <h2>{{ article.title }}</h2>
         </div>
         <div class="metadata">
-            <p>Ecrit le 16/03/2019 a 10:52 dans la categorie Informatique</p>
-        </div>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                                             It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                                                             It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                                                              and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+            <p>Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{ article.createdAt | date('H:i') }} dans la categorie Informatique</p>
         </div>
         <div class="content">
-            <img alt="" src="http://placehold.it/350x150">
+        {# pour enlever les balises html j'utilise le filtre raw #}
+            <p>{{ article.content | raw }}</p>
+        </div>
+        <div class="image">
+             <img alt="" src="{{ article.image }}">
         </div>
         <div class="boutonArticle">
             {# j'utilise {{}} pour permettre l'affichage de l'expression path et envoyer la route a l'annotation @ correspondante #}
