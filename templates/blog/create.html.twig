@@ -17,6 +17,12 @@ doc : https://symfony.com/doc/current/form/bootstrap4.html
      #}
      {{ form_start(formArticle)}}
 
+    {# sans le layout bootstrap j'aurai dut ecrire une div pour chaques champ
+    de la forme <div>  {{ form_widget(formArticle.title)}} </div>
+                <div>  {{ form_widget(formArticle.contenu)}} </div>
+                <div>  {{ form_widget(formArticle.image)}} </div>
+    et adapter la fonction sur le controleur
+     #}
     {{ form_widget(formArticle)}}
 
     {# j'ecrit mon bouton en manuel  #}
