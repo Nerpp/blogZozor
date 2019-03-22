@@ -61,36 +61,50 @@ class BlogController extends AbstractController
 
         // doc pour admnistrer les types https://symfony.com/doc/current/reference/forms/types.html
         // pour creer des formulaires facilements sur symfony
+        // $form = $this->createFormBuilder($article)
+        //on configure la forme
+        // je peu configurer les types simple input, text area etc doc : https://symfony.com/doc/current/reference/forms/types.html
+        //je peu ajouter un tableau d'option qui peut contenir un autre tableau d'option
+        // ->add('title', TextType::class, [
+        //     'attr' => [
+        //         'placeholder' => "Titre de l'article"
+        // je rajoute la classe form-control dans un div
+        // 'class' => 'form-control'
+        //mais le layout bootstrap m'evite de le faire
+        //     ]     
+        // ])
+        // ->add('content', TextareaType::class,[
+        //     'attr' => [
+        //         'placeholder' => "Contenu de l'article"
+        //     ]
+        // ])
+        // ->add('image', TextType::class,[
+        //     'attr' => [
+        //         'placeholder' => "Image de l'article"
+        //     ]
+        // ])
+        // Ajouter un bouton pour enregistrer en utilisant la statique SubmitType en le labellant Enregistrer
+        // Ne pas oublier le use pour la classe SubmitTypes
+        // ->add('save', SubmitType::class,[
+        //     'label' => 'Enregistrer'
+        // ])
+        //Si on veut ajouter ou modifier l'article vaut mieux creer un bouton sur le template create
+        // on envoit
+        // ->getForm();
+
+        // IL VAUT MIEUX SIMPLIFIER LE CODE  ET UTILISER LES OPTIONS  DU HTML DANS LE TEMPLATE
+
+
+
         $form = $this->createFormBuilder($article)
-                        //on configure la forme
-                        // je peu configurer les types simple input, text area etc doc : https://symfony.com/doc/current/reference/forms/types.html
-                        //je peu ajouter un tableau d'option qui peut contenir un autre tableau d'option
-                        ->add('title', TextType::class, [
-                            'attr' => [
-                                'placeholder' => "Titre de l'article"
-                                // je rajoute la classe form-control dans un div
-                                // 'class' => 'form-control'
-                                //mais le layout bootstrap m'evite de le faire
-                            ]     
-                        ])
-                        ->add('content', TextareaType::class,[
-                            'attr' => [
-                                'placeholder' => "Contenu de l'article"
-                            ]
-                        ])
-                        ->add('image', TextType::class,[
-                            'attr' => [
-                                'placeholder' => "Image de l'article"
-                            ]
-                        ])
-                        // Ajouter un bouton pour enregistrer en utilisant la statique SubmitType en le labellant Enregistrer
-                        // Ne pas oublier le use pour la classe SubmitTypes
-                        // ->add('save', SubmitType::class,[
-                        //     'label' => 'Enregistrer'
-                        // ])
-                        //Si on veut ajouter ou modifier l'article vaut mieux creer un bouton sur le template create
-                        // on envoit
-                        ->getForm();
+                    ->add('title')
+                    ->add ('content')
+                    ->add ('image')
+                    ->getForm();
+
+
+
+
 
         // je passe a twig un tableau en plus de la route pour l'afficher
         return $this->render('blog/create.html.twig',[

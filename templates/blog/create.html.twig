@@ -23,7 +23,23 @@ doc : https://symfony.com/doc/current/form/bootstrap4.html
                 <div>  {{ form_widget(formArticle.image)}} </div>
     et adapter la fonction sur le controleur
      #}
-    {{ form_widget(formArticle)}}
+
+    {# laisse le controller gerer les options #}
+    {# {{ form_widget(formArticle)}} #}
+
+
+    {# meilleure pratique est d'admnistrer le html dans le template
+    admnistre le champ, le label (placeholder) et les erreurs
+     #}
+    {# N'OUBLIE PAS LES OPTIONS EN TWIGS UTILISENT DES CROCHETS {} #}
+
+{# je cree mon champs  form_row. je vais rechercher l'attribut 'formArticle' dans le render de ma fonction dans mon controller,
+je lui rajoute la valeur que il doit retrouver dans l'objet Article qui est .title 
+je crée un tableau d'option avec des crochets, car on est sur twig ou je passe l'option attr qui comprendra un autre tableau qui contiendra le placeholder
+ #}
+    {{ form_row(formArticle.title,{'attr' : {'placeholder' : "Titre de l'article" }})  }}
+    {{ form_row(formArticle.content, {'attr' : {'placeholder' : "Contenu de l'article" }})  }}      
+    {{ form_row(formArticle.image, {'attr' : {'placeholder' : "URL de l'Image" }})  }}
 
     {# j'ecrit mon bouton en manuel  #}
     <button type="submit" class="btn btb-success">Ajouter l'article</button>
