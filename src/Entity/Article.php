@@ -4,7 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+// validation https://symfony.com/doc/current/validation.html
+// On va renommer consrtraints en assert car c'est un langage de test unitaire
+//https://symfony.com/doc/current/validation.html#constraint-configuration
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
+ * je lui indique ou utiliser la Bdd
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  */
 class Article
@@ -18,11 +24,24 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Votre titre doit contenir {{ limit }} characteres minimum",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     *  @Assert\Length(
+     *      min = 2,
+     *      minMessage = "Votre titre doit contenir {{ limit }} characteres minimum"
+     * )
+     * 
      */
     private $content;
 
