@@ -8,7 +8,14 @@ doc : https://symfony.com/doc/current/form/bootstrap4.html
 
 {% block body %}
 
-    <h1>Création d'un article</h1>
+{# pour adapter le titre comme le bouton #}
+<h1>
+    {% if editMode %}
+        Enregistrer les Modifications
+    {% else %}
+        Ajouter un Article
+    {% endif %}
+</h1>
 
 {# le bootstrap_4_layout va construire les div automatiquement #}
     
@@ -42,7 +49,16 @@ je crée un tableau d'option avec des crochets, car on est sur twig ou je passe 
     {{ form_row(formArticle.image, {'attr' : {'placeholder' : "URL de l'Image" }})  }}
 
     {# j'ecrit mon bouton en manuel  #}
-    <button type="submit" class="btn btb-success">Ajouter l'article</button>
+    <button type="submit" class="btn btb-success">
+    {# pour changer la valeur venant du render de la fonction form du controller
+    l'edit Mode sera booléen et admnistrera la valeur
+     #}
+      {% if editMode %}
+      Enregistrer les Modifications
+      {% else %}
+      Ajouter un Article   
+      {% endif %}
+    </button>
 
    {# plus besoin du {{ form_end(formArticle) }} mais pareil que le start #}
    {{ form_end(formArticle) }}

@@ -4,14 +4,22 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+
+use Doctrine\Common\Persistence\ObjectManager;
 
 // je dois determiner chaque use type
 //la doc des formes pour le use https://symfony.com/doc/4.1/forms.html
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
+use PhpParser\Node\Expr\Cast\Object;
+
+// pour utiliser le form creer par la console
+use App\Form\ArticleType;
 
 
 class BlogController extends AbstractController
@@ -26,6 +34,7 @@ class BlogController extends AbstractController
     {
         // repo va appeler la fonction getDoctrine en utilisant la classe Artice en tant que statique
         // $repo = $this->getDoctrine()->getRepository(Article::class); n'est plus utile car je l'appelle dans la fonction index(ArticleRepository $repo)
+        // repo va utiliser l'application Repository pour aller chercher dans la Bdd
 
         $articles = $repo->findAll();
 
@@ -51,14 +60,22 @@ class BlogController extends AbstractController
     }
 
     /**
+     * Une seule fonction pour modifier ou creer un article
      * 
-     * @Route("/blog/new", name="blog_create")
+     * Pour creer Un formulaire
+     * @Route("/blog/new",       name="blog_create")
+     * 
+     * deuxieme route pour editer
+     * @Route("/blog/{id}/edit", name="blog_edit")
      */
 
-    public function create(){
+    public function form(Article $article = null,Request $request, ObjectManager $manager){
 
-        $article = new Article();
-
+        // si j'envoit pas d'article a j'en crée un
+        if (!$article){
+            $article = new Article();
+        }
+        
         // doc pour admnistrer les types https://symfony.com/doc/current/reference/forms/types.html
         // pour creer des formulaires facilements sur symfony
         // $form = $this->createFormBuilder($article)
@@ -94,23 +111,45 @@ class BlogController extends AbstractController
 
         // IL VAUT MIEUX SIMPLIFIER LE CODE  ET UTILISER LES OPTIONS  DU HTML DANS LE TEMPLATE
 
+        // $form = $this->createFormBuilder($article)
+        //             ->add('title')
+        //             ->add ('content')
+        //             ->add ('image')
+        //             ->getForm();
+        
+        $form = $this->createForm(ArticleType::class, $article);
 
+        // j'initialise la requete
+        $form->handleRequest($request);
 
-        $form = $this->createFormBuilder($article)
-                    ->add('title')
-                    ->add ('content')
-                    ->add ('image')
-                    ->getForm();
+        // je controle que la requete corresponde si elle est pas nulle et si elle est valide
+        if ($form->isSubmitted() && $form->isValid()) {
 
+            // si l'article n'a pas d'identifiant (jamais créer)
+            if (!$article->getId()) {
+                // j'ajoute l'heure de creation
+                $article->setCreatedAt(new \DateTime);
+            }
+            
 
+            // j'initialise 
+            $manager->persist($article);
 
+            // j'envoit
+            $manager->flush();
 
+            // si tout a été soumis et valider je redirige vers blog_show en deffinissant l'id de l'object creer
+            return $this->redirectToRoute('blog_show', ['id' => $article->getId()]);
+        }
+        // si la requete est pas soumise ou ne correspond pas je renvoit a la page de creation
 
         // je passe a twig un tableau en plus de la route pour l'afficher
         return $this->render('blog/create.html.twig',[
-            // je lui passe une variable form, mais seulement le resultat car $form contient la construction
+             // je lui passe une variable form, mais seulement le resultat car $form contient la construction
             // la methode view va creer l'affichage
-            'formArticle' => $form->createView()
+            'formArticle' => $form->createView(),
+            // pour changer l'intituler du bouton je verifie le booléen d'id
+            'editMode' => $article->getId() != null
         ]);
     }
 
