@@ -1,23 +1,41 @@
 {# j'utilise une commande twig pour etendre le template de base #}
 {% extends 'base.html.twig' %}
-
 {# le block body comme cela va etre copié dans le template de base par twig #}
 {% block body %}
-
-<article>
+    <article>
         <div class="titreArticle">
             <h2>{{ article.title }}</h2>
         </div>
         <div class="metadata">
-            <p>Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{ article.createdAt | date('H:i') }} dans la categorie Informatique</p>
+            <p>Ecrit le
+                {{ article.createdAt | date('d/m/Y') }}
+                à
+                {{ article.createdAt | date('H:i') }}
+                dans la catégorie
+                {{ article.category.title }}</p>
         </div>
-        <div class="content">
-        {# pour enlever les balises html j'utilise le filtre raw #}
+        <div
+            class="content">
+            {# pour enlever les balises html j'utilise le filtre raw #}
             <p>{{ article.content | raw }}</p>
         </div>
         <div class="image">
-             <img alt="" src="{{ article.image }}">
-        </div>
-</article>
-
-{% endblock %}
+            <img alt="" src="{{ article.image }}"></div>
+        </article>
+        <section id="commentaires">
+            {% for comment in article.comments %}
+                <div class="comment">
+                    <div class="row">
+                        <div class="col-3">
+                            {{comment.author}}
+                            (<small>{{comment.createdAt | date('d/m/Y à H:i') }}
+                            </small>)
+                        </div>
+                        <div class="col">
+                            {{comment.content | raw}}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    {% endblock %}
